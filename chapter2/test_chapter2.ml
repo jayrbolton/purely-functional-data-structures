@@ -1,12 +1,13 @@
 open OUnit2
+open Chapter2
 
-let test1 test_ctxt = assert_equal 1 2
+let test1 test_ctxt = assert_equal Chapter2.ListStack.empty []
 
 (* Operator ">:::" defines a list of tests *)
 (* Operator ">::" names a test *)
 
 let suite =
-  "suite" >::: (* define a list of tests *)
+  "suite" >:::
     [ "test1" >:: test1
     ]
 
