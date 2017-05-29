@@ -1,4 +1,3 @@
-
 exception Empty
 exception Subscript
 
@@ -17,17 +16,16 @@ module ListStack : STACK = struct
 
   let empty = []
   let isEmpty s = s = []
-
   let cons x s = x :: s
   let head = function
       [] -> raise Empty
     | h :: _ -> h
-
   let tail = function
       [] -> raise Empty
     | _ :: t -> t
-
-  let (++) = (@)
+  let rec (++) xs ys = match xs with
+      [] -> ys
+    | x :: txs -> x :: (txs ++ ys)
 end
 
 module CustomStack : STACK = struct
@@ -44,6 +42,15 @@ module CustomStack : STACK = struct
     | Cons(_, t) -> t
   let rec (++) xs ys = match xs with
       Nil -> ys
-    | Cons(hxs, txs) -> cons hxs (txs ++ ys)
+    | Cons(x, txs) -> cons x (txs ++ ys)
 end
+
+(* update list xs with value y at index i *)
+(* takes a ListStack *)
+let rec update xs i y = match xs, i with
+    [], _ -> raise Subscript
+  | (x :: txs), 0 -> y :: xs
+  | (x :: txs), _ -> update txs (i - 1) y
+
+
 
